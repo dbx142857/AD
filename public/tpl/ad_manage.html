@@ -1,0 +1,88 @@
+<!--<inherit-layout parent="/tpl/adCenter.menu.html">-->
+
+<!--</inherit-layout>-->
+
+<inherit-layout parent="/tpl/adCenter.menu.html">
+    <!--<pre>-->
+    <!--{{ formData }}-->
+    <!--</pre>-->
+
+    <p>账户名称:{{baseService.user.advertisers_name}}<button>管理</button>账户余额：{{baseService.total_balance}}元（现金账户{{baseService.remain}}元 虚拟账户{{baseService.v_remain}}元）<button>充值</button></p>
+    <button ng-click="$location.url('/ad_new')">新建素材</button>
+    <div ng-if="ads.length===0">
+        木有素材哦亲爱的
+    </div>
+
+    <div ng-if="ads.length!==0">
+        <p>
+            一共{{formData.count}}个素材,其中有{{formData.countY}}个审核通过的，{{formData.countN}}个审核失败的，{{formData.countU}}个审核中的
+        </p>
+        <table>
+            <tr>
+                <td>
+                        <span>
+                            <multi-check-all></multi-check-all>
+                        </span>
+                    选择
+                </td>
+                <td ng-repeat="item in fields">
+                    {{item}}
+                </td>
+            </tr>
+            <tr ng-repeat="item in ads">
+                <td>
+                    <multi-check multi-id="{{item.ad_id}}"></multi-check>
+                    <!--<input ng-click="location.href='http://172.16.1.5:9000/report/advertisersTable/overViewTable.html?userid='+baseService.user.advertisers_id;" type="checkbox">-->
+                </td>
+                <td>
+                    {{item.ad_name}}
+                </td>
+                <td>
+                    <img ng-src="{{item.ad_url}}" style="max-width:320px;max-height:50px;">
+                </td>
+                <td>
+                    <a ng-href="{{item.landing_page}}">{{item.landing_page}}</a>
+                </td>
+                <td ng-if="item.check_status==='Y'">
+                    审核通过
+                </td>
+                <td ng-if="item.check_status==='N'">
+
+                    审核不通过
+                </td>
+                <td ng-if="item.check_status==='U'">
+
+                    审核中
+                </td>
+                <td ng-if="item.check_status===''">
+                    未审核
+                </td>
+                <td>
+                    <button ng-click="del(item.ad_id)">删除</button>
+                    <button ng-click="$location.url('/ad_modify?ad_id='+item.ad_id)">修改</button>
+                </td>
+            </tr>
+        </table>
+        <multi-handler handler="delAll" value="删除选中的"></multi-handler>
+    </div>
+
+    </p>
+    <!--<p>-->
+    <!--<button ng-click="$location.url(CONFIG.AD_PLAN_NEW_URL)">新增推广计划</button>-->
+    <!--</p>-->
+</inherit-layout>
+
+
+<!--<div class="row">-->
+    <!--<div ng-include="'tpl/adCenter.menu.html'"></div>-->
+    <!--<div class="col-md-10">-->
+
+        <!---->
+
+
+
+
+
+
+    <!--</div>-->
+<!--</div>-->

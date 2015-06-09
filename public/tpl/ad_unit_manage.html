@@ -1,0 +1,233 @@
+<inherit-layout parent="/tpl/adCenter.menu.html">
+    <form class="form-horizontal">
+        <h2><b>管理广告单元</b></h2>
+
+        <pre>
+        {{ formData }}
+        </pre>
+
+
+        <p>
+        <p>账户名称:{{baseService.user.advertisers_name}}<button>管理</button>账户余额：{{baseService.total_balance}}元（现金账户{{baseService.remain}}元 虚拟账户{{baseService.v_remain}}元）<button>充值</button></p>
+        </p>
+
+        <!--<div ng-if="formData.all_projects.length===0">-->
+        <!--该推广计划下暂时没有推广单元哦-->
+        <!--</div>-->
+        <!--<div ng-if="isCurProjectExist===false">-->
+        <!---->
+        <!--</div>-->
+
+        <!--{{}}-->
+        <div ng-if="formData.all_projects.length===0">
+            当前推广计划下暂时木有推广单元哦
+        </div>
+        <div ng-if="formData.all_projects.length!==0">
+            <p>
+                当前的推广计划：
+                <select ng-model="formData.selectedProject" ng-options="campaign.adproject_name for campaign in formData.all_projects">
+
+                </select>
+            </p>
+            <p>
+                计划状态：
+                <span ng-if="formData.selectedProject.status==='Y'">
+                    推广中
+                </span>
+                <span ng-if="formData.selectedProject.status!=='Y'">
+
+                    暂停中
+                </span>
+                <span>每日预算：{{formData.selectedProject.budget_day/1000000}}</span>
+            </p>
+            <p>
+                <span>推广单元:{{formData.unitOfSelectedProject.length}}个</span>
+                <span>开启单元:{{formData.countY}}个</span>
+                <span>暂停单元:{{formData.countN}}个</span>
+            </p>
+            <p>
+                <button ng-click="$location.url(CONFIG.AD_UNIT_NEW_URL+'?adproject_id='+baseService.urlParams.adproject_id)">新增推广单元</button>
+                <br>
+                <!--<span ng-if="formData.unitOfSelectedProject.length!==0">-->
+                <!--<button ng-click="setStatus('Y')">开启</button>-->
+                <!--<button ng-click="setStatus('N')">暂停</button>-->
+                <!--<button ng-click="del()">删除</button>-->
+                <!--</span>-->
+
+            </p>
+            <div ng-if="formData.unitOfSelectedProject.length!==0">
+                <table>
+                    <tr>
+                        <td>
+                            <span>
+                                <multi-check-all></multi-check-all>
+                            </span>
+                            选择
+                        </td>
+                        <td ng-repeat="item in fields">
+                            {{item}}
+                        </td>
+                    </tr>
+                    <tr ng-repeat="item in formData.unitOfSelectedProject">
+
+                        <td>
+                            <multi-check multi-id="{{item.adcampaign_id}}"></multi-check>
+                            <!--<input ng-click="location.href='http://172.16.1.5:9000/report/advertisersTable/overViewTable.html?userid='+baseService.user.advertisers_id;" type="checkbox">-->
+                        </td>
+
+                        <td>{{item.adcampaign_name}}</td>
+                        <td>
+                            <img style="max-width:350px;max-height:50px;" ng-src="{{item.ad_url}}">
+                        </td>
+                        <td>
+                            <a href="{{item.landing_page}}">{{item.landing_page}}</a>
+                        </td>
+                        <!--<td>-->
+                            <!--ad_type:{{item.ad_type}}-->
+                        <!--</td>-->
+                        <td>{{item.price/1000000}}</td>
+
+                        <td ng-if="item.adcampaign_status==='N'">
+                            暂停中
+                        </td>
+
+                        <td ng-if="item.adcampaign_status==='Y'&&item.check_status==='Y'">
+                            已开启
+                        </td>
+                        <td ng-if="item.adcampaign_status==='Y'&&item.check_status==='N'">
+                            审核拒绝
+                        </td>
+                        <td ng-if="item.adcampaign_status==='Y'&&item.check_status==='U'">
+                            审核中
+                        </td>
+                        <td>
+                            <!--{{clickrates}}-->
+                            {{clickrates[item.adcampaign_id].imp||0}}
+                        </td>
+                        <td>
+                            {{clickrates[item.adcampaign_id].click||0}}
+                        </td>
+                        <td>
+                            {{clickrates[item.adcampaign_id].clickrate||0}}
+                        </td>
+                        <td>
+                            {{totalConsumption[item.adcampaign_id]||0}}
+                        </td>
+                        <td>
+                            <!--{{item}}-->
+                            <button ng-click="$location.url('/ad_unit_modify?adcampaign_id='+item.adcampaign_id)">修改</button>
+                            <button ng-click="setStatus('Y',item.adcampaign_id)">开启</button>
+                            <button ng-click="setStatus('N',item.adcampaign_id)">暂停</button>
+                            <button ng-click="del(item.adcampaign_id)">删除</button>
+                        </td>
+                    </tr>
+                </table>
+
+
+                <multi-handler handler="openAll" value="开启选中的"></multi-handler>
+                <multi-handler handler="pauseAll" value="暂停选中的"></multi-handler>
+                <multi-handler handler="delAll" value="删除选中的"></multi-handler>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            <!--<table>-->
+            <!--<tr>-->
+
+            <!--<td ng-repeat="field in fields">-->
+            <!--{{field}}-->
+            <!--</td>-->
+            <!--</tr>-->
+            <!--<tr ng-repeat="item in formData.all_projects">-->
+            <!--<td>{{item.adcampaign_name}}</td>-->
+            <!--</tr>-->
+            <!--</table>-->
+
+
+            <!--<fieldset>-->
+            <!--<legend>-->
+            <!--第一步：设置名称-->
+            <!--</legend>-->
+            <!--&lt;!&ndash;</fieldset>&ndash;&gt;-->
+            <!--<div class="form-group">-->
+            <!--<label class="col-sm-2 control-label">广告计划</label>-->
+            <!--<div class="col-sm-10">-->
+            <!--<select ng-model="formData.selectedAdProject"-->
+            <!--ng-options="adproject.adproject_name for adproject in adprojects" class="form-control">-->
+
+            <!--</select>-->
+            <!--</div>-->
+            <!--</div>-->
+
+
+
+
+
+            <!--</fieldset>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!--<div class="form-group">-->
+            <!--<div class="col-sm-offset-2 col-sm-10">-->
+            <!--<button class="btn btn-default">确认无误并创建新广告</button>-->
+            <!--</div>-->
+            <!--</div>-->
+        </div>
+
+
+
+
+
+
+
+
+    </form>
+</inherit-layout>
+
+<!--<div class="row">-->
+    <!--<div ng-include="'tpl/adCenter.menu.html'"></div>-->
+    <!--<div class="col-md-10">-->
+
+
+
+
+        <!---->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--</div>-->
+<!--</div>-->

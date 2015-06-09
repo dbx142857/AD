@@ -1,0 +1,76 @@
+<inherit-layout parent="/tpl/adCenter.menu.html">
+<pre>
+            {{formData}}
+        </pre>
+
+    <h4>新建素材</h4>
+    <!--<pre>-->
+    <!--{{ formData }}-->
+    <!--</pre>-->
+
+    <p>账户名称:{{baseService.user.advertisers_name}}<button>管理</button>账户余额：{{baseService.total_balance}}元（现金账户{{baseService.remain}}元 虚拟账户{{baseService.v_remain}}元）<button>充值</button></p>
+
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">创意标题</label>
+        <div class="col-sm-10">
+            <input ng-model="formData.ad_name" type="text" class="form-control" placeholder="请输入创意标题">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">关联URL</label>
+        <div class="col-sm-10">
+            <input ng-model="formData.landing_page" type="text" class="form-control" placeholder="请输入关联URL">
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="form-group">
+        <div class="row">
+            <div class="span12">
+                <form enctype="multipart/form-data" method="post" action="/ad/upload">
+                    <input type="file" name="myFile" id="myFile">
+
+                    <img id="imgReadedFromMyfile" style="display:block;max-width:320px;max-height:50px;">
+
+                    <p></p>
+
+                    <div class="form-actions"><input ng-click="submit($event)" id="uploadBtn" type="button" value="Submit" class="btn btn-primary"></div>
+                </form>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="span12">
+                <div class="progress progress-striped active" style="display: none;">
+                    <div style="width: 0%;height:100%;background:#3071a9;" class="bar"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12">
+                <div class="alert" style="display:none;">
+                    <button type="button" data-dismiss="alert" class="close">x</button>
+                    <span><strong class="message"></strong></span></div>
+            </div>
+        </div>
+    </div>
+</inherit-layout>
+
+<!--<div class="row">-->
+    <!--<div ng-include="'tpl/adCenter.menu.html'"></div>-->
+    <!--<div class="col-md-10">-->
+
+        <!---->
+
+
+
+
+
+    <!--</div>-->
+<!--</div>-->

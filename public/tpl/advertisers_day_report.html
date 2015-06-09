@@ -1,0 +1,86 @@
+<link rel="stylesheet" type="text/css" media="all" href="stylesheets/lib/daterangepicker-bs3.css"/>
+<script type="text/javascript" src="javascripts/lib/moment.min.js">
+</script>
+<script type="text/javascript" src="javascripts/lib/daterangepicker.js">
+</script>
+<script type="text/javascript" src="/report/highcharts-4.1.5/js/highcharts.js"></script>
+<script type="text/javascript" src="/report/highmaps-1.1.5/js/modules/map.js"></script>
+<script type="text/javascript" src="/report/highmaps-1.1.5/js/modules/data.js"></script>
+<script type="text/javascript" src="/report/highmaps-1.1.5/js/modules/drilldown.js"></script>
+<script type="text/javascript" src="/report/javascripts/cn-all-sar-taiwan.js"></script>
+
+<!--日期控件-->
+<div class="well">
+    <form class="form-horizontal">
+        <fieldset>
+            <div class="control-group">
+                <div class="controls">
+
+                    <div class="input-prepend input-group">
+                        <span class="add-on input-group-addon"><b>日期报表</b></span>
+
+                        <input type="text" style="width: 250px" name="datetimepicker" id="datetimepicker"
+                               class="form-control"
+                               value=""/>
+                    </div>
+
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<div id="container11" style=" width: 100%;height: 300px;"></div>
+
+<div class="container-fluid" >
+    <div class="row-fluid">
+        <div class="span12">
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>展示量</th>
+                    <th>点击量</th>
+                    <th>点击率</th>
+                    <th>花费(元)</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="x in row">
+                    <td>{{ x.day }}</td>
+                    <td>{{ x.imp }}</td>
+                    <td>{{ x.click }}</td>
+                    <td>{{ x.clickrate }}</td>
+                    <td>{{ x.cost }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="pagebar">
+        <button type="button" ng-disabled="currentPage == 0" ng-click="currentPage =  0;reportDataLoad()">首页</button>
+        <button type="button" ng-disabled="currentPage == 0" ng-click="currentPage = currentPage - 1;reportDataLoad()">
+            上一页
+        </button>
+        <span>{{currentPage + 1}} / {{totalPage}}</span>
+        <button type="button" ng-disabled="currentPage >= totalPage-1"
+                ng-click="currentPage = currentPage + 1;reportDataLoad()">
+            下一页
+        </button>
+        <button type="button" ng-disabled="currentPage == totalPage-1"
+                ng-click="currentPage = totalPage - 1;reportDataLoad()">
+            末页
+        </button>
+        <button type="button" ng-click="reportExcelExport()">
+            导出报表到EXCEL
+        </button>
+    </div>
+
+</div>
+
+
+</body>
+</html>

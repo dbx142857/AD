@@ -1,0 +1,150 @@
+<link rel="stylesheet" type="text/css" media="all" href="stylesheets/lib/daterangepicker-bs3.css"/>
+<script type="text/javascript" src="javascripts/lib/moment.min.js">
+</script>
+<script type="text/javascript" src="javascripts/lib/daterangepicker.js">
+</script>
+
+<inherit-layout parent="/tpl/adCenter.menu.html">
+    <form class="form-horizontal">
+
+            <pre>
+                {{ formData }}
+            </pre>
+
+        <fieldset>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">计划名称</label>
+
+                <div class="col-sm-10">
+                    <input ng-model="formData.adproject_name" type="text" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">总预算</label>
+
+                <div class="col-sm-10">
+                    <input type="number" ng-model="formData.budget">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">每日预算</label>
+
+                <div class="col-sm-10">
+                    <input type="radio" ng-model="formData.budget_day" value="100">100元
+                    <input type="radio" ng-model="formData.budget_day" value="200">200元
+                    <input type="radio" ng-model="formData.budget_day" value="300">300元
+                    自定义:
+                    <input type="number" ng-model="formData.budget_day">
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">投放时间</label>
+
+                <div class="col-sm-10">
+                    <!--<input id="everyDayCheckbox" name="time_ranges" value="1 2 3 4 5 6 7" ng-model="formData.time_ranges" type="radio">每天<br>-->
+                    <!--<input name="time_ranges" ng-click="set_time_range()" type="radio">按周期：-->
+
+                        <span ng-repeat="item in days">
+                            <input checked ng-click="custom_time_ranges($index,$event)" type="checkbox">{{item.name}}
+                        </span>
+                </div>
+            </div>
+
+
+            <!--<div class="well">-->
+            <!--<form class="form-horizontal ng-pristine ng-valid">-->
+            <!--<fieldset>-->
+            <div class="control-group">
+                <div class="controls">
+
+                    <div class="input-prepend input-group">
+                        <span class="add-on input-group-addon"><b>投放日期</b></span>
+
+                        <input type="text" style="width: 200px" name="datetimepicker" id="datetimepicker" class="form-control active" value="">
+                    </div>
+                </div>
+            </div>
+            <!--</fieldset>-->
+            <!--</form>-->
+            <!--</div>-->
+            <script>
+                $('#datetimepicker').daterangepicker({
+
+                    format: "YYYY-MM-DD",
+                    separator: ' To ',
+//                        locale: {
+//                            customRangeLabel: '自定义范围'
+//                        },
+//                        ranges: {
+//                            '今天': [moment(), moment()],
+//                            '昨天': [moment().subtract('days', 1), moment().subtract('days', 1)],
+//                            '最近 7 天': [moment().subtract('days', 6), moment()],
+//                            '最近 15 天': [moment().subtract('days', 6), moment()],
+//                            '最近 1 月': [moment().startOf('month'), moment().endOf('month')],
+//                            '最近 3 月': [moment().subtract('month', 2).startOf('month'), moment().subtract('month').endOf('month')]
+//                        }
+                });
+
+            </script>
+
+            <!--<div class="form-group">-->
+            <!--<label class="col-sm-2 control-label">开始时间</label>-->
+
+
+            <!--<div class="input-prepend input-group">-->
+            <!--<span class="add-on input-group-addon">-->
+            <!--<i class="glyphicon glyphicon-calendar fa fa-calendar">-->
+            <!--</i>-->
+            <!--</span>-->
+            <!--<input type="text" style="width: 200px" name="birthday"  id="start_date" ng-model="formData.start_date"-->
+            <!--class="form-control" value="03/18/2013" />-->
+            <!--</div>-->
+
+            <!--&lt;!&ndash;<div class="col-sm-10">&ndash;&gt;-->
+            <!--&lt;!&ndash;<input id="start_date" ng-model="formData.start_date" type="text" class="form-control">&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+            <!--<label class="col-sm-2 control-label">结束时间</label>-->
+
+            <!--<div class="input-prepend input-group">-->
+            <!--<span class="add-on input-group-addon">-->
+            <!--<i class="glyphicon glyphicon-calendar fa fa-calendar">-->
+            <!--</i>-->
+            <!--</span>-->
+            <!--<input type="text" style="width: 200px" name="birthday" id="stop_data" ng-model="formData.stop_data"-->
+            <!--class="form-control" value="03/18/2013" />-->
+            <!--</div>-->
+
+
+            <!--&lt;!&ndash;<div class="col-sm-10">&ndash;&gt;-->
+            <!--&lt;!&ndash;<input id="stop_data" ng-model="formData.stop_data" type="text" class="form-control">&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--</div>-->
+            <!--<script>-->
+
+            <!---->
+            <!--</script>-->
+
+
+
+            <button ng-click="submit()">确定</button>
+
+        </fieldset>
+    </form>
+</inherit-layout>
+
+<!--<div class="row">-->
+    <!--<div ng-include="'tpl/adCenter.menu.html'"></div>-->
+    <!--<div class="col-md-10">-->
+
+        <!---->
+    <!--</div>-->
+<!--</div>-->

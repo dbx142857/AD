@@ -1,0 +1,7 @@
+/node_modules
+/.idea
+/config
+/public/uploads
+/test
+admin/node_modules/
+/app.js

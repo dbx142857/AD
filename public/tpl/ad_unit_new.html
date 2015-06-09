@@ -1,0 +1,365 @@
+<inherit-layout parent="/tpl/adCenter.menu.html">
+    <form class="form-horizontal">
+        <h2><b>新增广告单元</b></h2>
+
+            <pre>
+                {{ formData }}
+            </pre>
+
+
+        <fieldset>
+            <legend>
+                第一步：设置名称
+            </legend>
+            <!--</fieldset>-->
+            <!--<div class="form-group">-->
+            <!--<label class="col-sm-2 control-label">广告计划</label>-->
+            <!--<div class="col-sm-10">-->
+            <!--<select ng-model="formData.selectedAdProject"-->
+            <!--ng-options="adproject.adproject_name for adproject in adprojects" class="form-control">-->
+
+            <!--</select>-->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="form-group">
+                <label class="col-sm-2 control-label">广告名称</label>
+                <div class="col-sm-10">
+                    <input ng-model="formData.adcampaign_name" type="text" class="form-control" placeholder="请输入广告名称">
+                </div>
+            </div>
+            <!--<div class="form-group">-->
+            <!--<label class="col-sm-2 control-label">排程设置</label>-->
+            <!--<div class="col-sm-10">-->
+            <!--<input ng-model="formData.adcampaign_name" type="text" class="form-control" placeholder="请输入广告名称">-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+            <!--<div class="col-sm-offset-2 col-sm-10">-->
+            <!--<div class="checkbox">-->
+            <!--<label>-->
+            <!--<input type="checkbox"> Remember me-->
+            <!--</label>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+
+
+            <!--<fieldset>-->
+            <legend>
+                第二步：设置投放条件
+            </legend>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">选择投放区域</label>
+                <div class="col-sm-10">
+                    <input ng-model="locationIsChina" value="1" name="user_area" checked type="radio"><span>全国</span>
+                    <input ng-model="locationIsChina" value="0" ng-change="0" name="user_area" type="radio"><span>自定义</span><br>
+                    <div ng-if="locationIsChina==='0'">
+
+
+                        <ul>
+                            <li ng-repeat="item in allCitiesSortedByProvince">
+                                <h4>{{item.name}}</h4>
+                                    <span ng-if="item.cities.length!==0" ng-repeat="city in item.cities">
+                                        <input ng-click="setSelectedCitiesCodeArr(city.code,$event)" type="checkbox"><span>{{city.name}}</span>
+                                    </span>
+                                    <span ng-if="item.cities.length===0">
+                                        <input ng-click="setSelectedCitiesCodeArr(item.code,$event)" type="checkbox"><span>{{item.name}}</span>
+                                    </span>
+                            </li>
+                        </ul>
+                        <!---->
+                        <!--<ul class="tabmenu">-->
+                        <!--<li ng-repeat="item in allCitiesSortedByProvince">-->
+                        <!--<a>-->
+                        <!--{{item.name}}-->
+                        <!--</a>-->
+                        <!--</li>-->
+                        <!--</ul>-->
+
+                        <!--<div onload="alert(123)" class="tabmenu-body" ng-repeat="item in allCitiesSortedByProvince">-->
+                        <!--<span ng-if="item.cities.length!==0" ng-repeat="city in item.cities">-->
+                        <!--<input ng-click="setSelectedCitiesCodeArr(city.code,$event)" type="checkbox"><span>{{city.name}}</span>-->
+                        <!--</span>-->
+                        <!--<span ng-if="item.cities.length===0">-->
+                        <!--<input ng-click="setSelectedCitiesCodeArr(item.code,$event)" type="checkbox"><span>{{item.name}}</span>-->
+                        <!--</span>-->
+                        <!--</div>-->
+                        <!--<script>-->
+                        <!--jQuery.initialTabmenu($('.tabmenu').eq(0))-->
+                        <!--</script>-->
+                        <!--<tabset justified="true">-->
+                        <!--<tab ng-repeat="item in allCitiesSortedByProvince" heading="{{item.name}}">-->
+                        <!--<span ng-if="item.cities.length!==0" ng-repeat="city in item.cities">-->
+                        <!--<input ng-click="setSelectedCitiesCodeArr(city.code,$event)" type="checkbox"><span>{{city.name}}</span>-->
+                        <!--</span>-->
+                        <!--<span ng-if="item.cities.length===0">-->
+                        <!--<input ng-click="setSelectedCitiesCodeArr(item.code,$event)" type="checkbox"><span>{{item.name}}</span>-->
+                        <!--</span>-->
+                        <!--</tab>-->
+                        <!--</tabset>-->
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">选择投放人群属性</label>
+                <div class="col-sm-10">
+                    <span><input name="user_sex" checked ng-model="formData.user_sex" value="" type="radio">不限</span>
+                    <span><input name="user_sex" ng-model="formData.user_sex" value="M" type="radio">男</span>
+                    <span><input name="user_sex" ng-model="formData.user_sex" value="F" type="radio">女</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">选择投放设备</label>
+                <div class="col-sm-10">
+                    <span><input checked name="device" ng-model="formData.device" value="" type="radio">不限</span>
+                    <span><input name="device" ng-model="formData.device" value="1" type="radio">手机</span>
+                    <span><input name="device" ng-model="formData.device" value="2" type="radio">平板</span>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">选择投放操作系统</label>
+                <div class="col-sm-10">
+                    <span><input ng-model="osIsNolimited" value="1" type="radio">不限</span>
+                    <span><input ng-model="osIsNolimited" value="0" type="radio">自定义</span>
+                    <div ng-if="osIsNolimited==='0'">
+                        系统版本高于
+                        <!--ng-options="adproject.adproject_name for adproject in adprojects" class="form-control">-->
+                        <select ng-model="formData.os" ng-options="os.name for os in oss">
+
+                        </select>
+                    </div>
+                    <!--<span><input type="radio">Android</span>-->
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">选择投放兴趣</label>
+                <div class="col-sm-10">
+
+
+
+
+                    <!--<tabset justified="true">-->
+                        <!--<tab heading="{{tag1_name}}">-->
+
+                            <!--<div ng-repeat="item in tag1">-->
+
+                                <!--<span><b style="font-size:1.2em;"><input ng-click="handle_tag_click(item.id,true)" tag_id="{{item.id}}" type="checkbox">{{item.name}}</b></span>-->
+                                <!--<div style="padding-left:20px;">-->
+                                    <!--<span ng-if="item.children" ng-repeat="child_item in item.children">-->
+                                        <!--<span><input ng-click="handle_tag_click(child_item.id)" tag_id="{{child_item.id}}" type="checkbox">{{item.name}}</span>-->
+                                    <!--</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                        <!--</tab>-->
+                        <!--<tab heading="{{tag2_name}}">-->
+                            <div ng-repeat="item in tag2">
+                                <span><b style="font-size:1.2em;"><input total="{{countObj(item.children)}}" ng-click="handle_tag_click(item.id,$event,true)" tag_id="{{item.id}}" type="checkbox">{{item.name}}</b></span>
+                                <div style="padding-left:20px;">
+                                    <span ng-if="item.children" ng-repeat="child_item in item.children">
+                                        <span><input ng-click="handle_tag_click(child_item.id,$event)" tag_id="{{child_item.id}}" type="checkbox">{{child_item.name}}</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                        <!--</tab>-->
+                    </tabset>
+                </div>
+            </div>
+
+
+
+
+
+
+            <legend>
+                第三步：编辑广告创意
+            </legend>
+
+
+
+            <div>
+                <tabset justified="true">
+                    <tab heading="已有创意">
+
+                        <div ng-if="ads.length===0">
+暂时木有可用的广告创意，请新建一个哦
+                        </div>
+                        <div ng-if="ads.length!==0">
+                            <table>
+                                <tr>
+                                    <td>请选择一个创意</td>
+                                    <td>创意标题</td>
+                                    <td>图片</td>
+                                    <!--<td>链接</td>-->
+                                </tr>
+                                <tr ng-repeat="item in ads">
+                                    <td>
+                                        <input ng-model="formData.ad_id" value="{{item.ad_id}}" type="radio" name="ad">使用当前广告素材
+                                    </td>
+                                    <td>
+                                        {{item.ad_name}}
+                                    </td>
+                                    <td>
+                                        <img style="display:block;max-width:200px;max-height:50px;" ng-src="{{item.ad_url}}">
+                                    </td>
+                                    <!--<td>-->
+                                    <!--{{item.ad_url}}-->
+                                    <!--</td>-->
+                                </tr>
+                            </table>
+                        </div>
+
+
+                    </tab>
+                    <tab heading="新建创意">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">创意标题</label>
+                            <div class="col-sm-10">
+                                <input ng-model="formData.adNewObj.ad_name" type="text" class="form-control" placeholder="请输入创意标题">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">关联URL</label>
+                            <div class="col-sm-10">
+                                <input ng-model="formData.adNewObj.landing_page" type="text" class="form-control" placeholder="请输入关联URL">
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="span12">
+                                    <form enctype="multipart/form-data" method="post" action="/ad/upload">
+                                        <input type="file" name="myFile" id="myFile">
+
+                                        <img id="imgReadedFromMyfile" style="display:block;max-width:320px;max-height:50px;">
+
+                                        <p></p>
+
+                                        <div class="form-actions"><input ng-click="file_upload($event)" id="uploadBtn" type="button" value="Submit" class="btn btn-primary"></div>
+                                    </form>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="span12">
+                                    <div class="progress progress-striped active" style="display: none;">
+                                        <div style="width: 0%;height:100%;background:#3071a9;" class="bar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="span12">
+                                    <div class="alert" style="display:none;">
+                                        <button type="button" data-dismiss="alert" class="close">x</button>
+                                        <span><strong class="message"></strong></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </tab>
+                </tabset>
+            </div>
+
+
+
+
+            <legend>
+                第四步：广告出价
+            </legend>
+            <!--</fieldset>-->
+            <div class="form-group">
+                <label class="col-sm-2 control-label">出价</label>
+                <div class="col-sm-10">
+                    <input ng-model="formData.price" type="number">元(每千次广告花费)
+                </div>
+            </div>
+
+
+        </fieldset>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button ng-click="submit()" class="btn btn-default">确认无误并创建新广告</button>
+            </div>
+        </div>
+
+
+
+
+
+
+
+    </form>
+</inherit-layout>
+
+<!--<div class="row">-->
+    <!--<div ng-include="'tpl/adCenter.menu.html'"></div>-->
+    <!--<div class="col-md-10">-->
+
+
+
+
+        <!---->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--</div>-->
+<!--</div>-->
+<style>
+    /*body { width: 700px; margin: 100px auto 0 auto; font-family: Arial, Helvetica; font-size: small; background-color: #eee;  }*/
+
+    /* ------------------------------------------------- */
+
+    input[type=checkbox],input[type=radio]{
+        cursor: pointer;
+    }
+</style>

@@ -1,0 +1,106 @@
+<inherit-layout parent="/tpl/adCenter.menu.html">
+
+    <!--<pre>-->
+    <!--{{ formData }}-->
+    <!--</pre>-->
+
+    <p>账户名称:{{baseService.user.advertisers_name}}<button>管理</button>账户余额：{{baseService.total_balance}}元（现金账户{{baseService.remain}}元 虚拟账户{{baseService.v_remain}}元）<button>充值</button></p>
+    <p>
+        <button ng-click="$location.url(CONFIG.AD_PLAN_NEW_URL)">新增推广计划</button>
+    </p>
+    <!--<p ng-if="fields.length===0">-->
+    <!--暂时没有推广计划哦-->
+    <!--</p>-->
+    <div ng-if="formData.results.length===0">
+        你暂时没有推广计划哦
+    </div>
+    <!--{{typeof(formData.results)}}-->
+    <div ng-if="formData.results.length!=0">
+        <p>
+            一共{{formData.count}}个计划,其中有{{formData.countY}}个开启的，{{formData.countN}}个暂停的
+        </p>
+        <table>
+            <tr>
+                <td>
+                        <span>
+                            <multi-check-all></multi-check-all>
+                        </span>
+                    选择
+                </td>
+                <td ng-repeat="item in fields">
+
+                    {{item}}
+                </td>
+            </tr>
+            <tr ng-repeat="item in formData.results">
+
+                <td>
+                    <multi-check multi-id="{{item.adproject_id}}"></multi-check>
+                    <!--<input ng-click="location.href='http://172.16.1.5:9000/report/advertisersTable/overViewTable.html?userid='+baseService.user.advertisers_id;" type="checkbox">-->
+                </td>
+                <td>
+
+                    {{item.adproject_name}}
+                </td>
+                <td ng-if="item.status==='Y'">
+                    推广中
+                </td>
+                <td ng-if="item.status!=='Y'">
+                    已暂停
+                </td>
+                <td>
+                    {{item.budget/1000000}}元
+                </td>
+                <td>
+                    {{item.budget_day/1000000}}元
+                </td>
+                <td>
+                    {{clickrates[item.adproject_id].imp||0}}
+                </td>
+                <td>
+                    {{clickrates[item.adproject_id].click||0}}
+                </td>
+                <td>
+                    {{clickrates[item.adproject_id].clickrate||0}}
+                </td>
+                <td>
+                    <p>
+                        total:{{(countUnitByPlan[item.adproject_id].countY||0)+(countUnitByPlan[item.adproject_id].countN||0)}},
+                        开启:{{countUnitByPlan[item.adproject_id].countY||0}}
+                        关闭:{{countUnitByPlan[item.adproject_id].countN||0}}
+                    </p>
+                    <button ng-click="$location.url(CONFIG.AD_UNIT_NEW_URL+'?adproject_id='+item.adproject_id)">添加</button>
+                    <button ng-click="$location.url(CONFIG.AD_UNIT_MANAGE_URL+'?adproject_id='+item.adproject_id)">管理</button>
+                </td>
+                <td>
+                    <button ng-click="$location.url('/ad_plan_modify?adproject_id='+item.adproject_id)">修改</button>
+                    <button ng-click="setStatus('Y',item.adproject_id)">开启</button>
+                    <button ng-click="setStatus('N',item.adproject_id)">暂停</button>
+                    <button ng-click="del(item.adproject_id)">删除</button>
+                </td>
+            </tr>
+        </table>
+
+        <multi-handler handler="openAll" value="开启选中的"></multi-handler>
+        <multi-handler handler="pauseAll" value="暂停选中的"></multi-handler>
+        <multi-handler handler="delAll" value="删除选中的"></multi-handler>
+
+    </div>
+
+
+
+
+    <p>
+        推广计划状态说明：<br>
+
+        1.开启：您的计划已经开启，广告在投放中。<br>
+        2.暂停推广：您自主进行了暂停操作。<br>
+    </p>
+</inherit-layout>
+
+<!--<div class="row">-->
+    <!--<div ng-include="'tpl/adCenter.menu.html'"></div>-->
+    <!--<div class="col-md-10">-->
+
+    <!--</div>-->
+<!--</div>-->

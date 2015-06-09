@@ -1,0 +1,9 @@
+
+
+
+2015-06-05 19:39:16
+sql-------------- is::select * from location
+
+
+2015-06-05 19:39:16
+sql-------------- is::select * from ad where advertisers_id='66' and check_status!='D'
